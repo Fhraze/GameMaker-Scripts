@@ -119,8 +119,7 @@ function setCameraSoftScene(_sceneX, _sceneY, _cameraIndex = DEFAULT_CAMERA_INDE
 
 // Call the camera step event
 function cameraStep()
-{
-	
+{	
 	var _index = global.cameraStruct.cameraIndex;
 	
 	switch(global.cameraStruct.type)
