@@ -45,32 +45,40 @@ global.cameraStruct =
 	cameraSpeed: DEFAULT_CAMERA_SPEED,
 	cursorInfluenceReduction: DEFAULT_CURSOR_INFLUENCE_REDUCTION,
 	lastX: noone,
-	lastY: noone
+	lastY: noone,
+	fixedX: noone,
+	fixedY: noone
 }
 
 // Set camera to snap to an object, but slightly attracted by the mouse cursor
-function setCameraFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _cursorInfluenceReduction = DEFAULT_CURSOR_INFLUENCE_REDUCTION)
+function setCameraFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone, _cursorInfluenceReduction = DEFAULT_CURSOR_INFLUENCE_REDUCTION)
 {
 	global.cameraStruct[$ "type"] = global.cameraType.follow;
 	global.cameraStruct[$ "obj"] = _followedObject;
 	global.cameraStruct[$ "cameraIndex"] = _cameraIndex;
 	global.cameraStruct[$ "cursorInfluenceReduction"] = _cursorInfluenceReduction;
+	global.cameraStruct[$ "fixedX"] = _fixedX;
+	global.cameraStruct[$ "fixedY"] = _fixedY;
 }
 
 // Set camera to snap to an object
-function setCameraSnapFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX)
+function setCameraSnapFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone)
 {
 	global.cameraStruct[$ "type"] = global.cameraType.snapFollow;
 	global.cameraStruct[$ "obj"] = _followedObject;
 	global.cameraStruct[$ "cameraIndex"] = _cameraIndex;
+	global.cameraStruct[$ "fixedX"] = _fixedX;
+	global.cameraStruct[$ "fixedY"] = _fixedY;
 }
 
 // Set camera to slowly follow an object
-function setCameraSoftFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _cameraSpeed = DEFAULT_CAMERA_SPEED)
+function setCameraSoftFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone, _cameraSpeed = DEFAULT_CAMERA_SPEED)
 {
 	global.cameraStruct[$ "type"] = global.cameraType.softFollow;
 	global.cameraStruct[$ "obj"] = _followedObject;
 	global.cameraStruct[$ "cameraIndex"] = _cameraIndex;
+	global.cameraStruct[$ "fixedX"] = _fixedX;
+	global.cameraStruct[$ "fixedY"] = _fixedY;
 	if(global.cameraStruct.lastX == noone)
 	{
 		global.cameraStruct.lastX = global.cameraStruct.obj.x - camera_get_view_width(view_camera[global.cameraStruct.cameraIndex]) * 0.5;
@@ -79,12 +87,14 @@ function setCameraSoftFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDE
 }
 
 // Set camera to slowly follow an object, but slightly attracted by the mouse cursor
-function setCameraExtraSoftFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _cameraSpeed = DEFAULT_CAMERA_SPEED, _cursorInfluenceReduction = DEFAULT_CURSOR_INFLUENCE_REDUCTION)
+function setCameraExtraSoftFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone, _cameraSpeed = DEFAULT_CAMERA_SPEED, _cursorInfluenceReduction = DEFAULT_CURSOR_INFLUENCE_REDUCTION)
 {
 	global.cameraStruct[$ "type"] = global.cameraType.extraSoftFollow;
 	global.cameraStruct[$ "obj"] = _followedObject;
 	global.cameraStruct[$ "cameraIndex"] = _cameraIndex;
 	global.cameraStruct[$ "cursorInfluenceReduction"] = _cursorInfluenceReduction;
+	global.cameraStruct[$ "fixedX"] = _fixedX;
+	global.cameraStruct[$ "fixedY"] = _fixedY;
 	if(global.cameraStruct.lastX == noone)
 	{
 		global.cameraStruct.lastX = global.cameraStruct.obj.x - camera_get_view_width(view_camera[global.cameraStruct.cameraIndex]) * 0.5;
@@ -119,7 +129,7 @@ function setCameraSoftScene(_sceneX, _sceneY, _cameraIndex = DEFAULT_CAMERA_INDE
 
 // Call the camera step event
 function cameraStep()
-{	
+{
 	var _index = global.cameraStruct.cameraIndex;
 	
 	switch(global.cameraStruct.type)
@@ -131,8 +141,10 @@ function cameraStep()
 				var _cursorX = (global.cameraStruct.obj.x - mouse_x)/global.cameraStruct.cursorInfluenceReduction; // Increment x value based on cursor pos
 				var _cursorY = (global.cameraStruct.obj.y - mouse_y)/global.cameraStruct.cursorInfluenceReduction; // Increment y value based on cursor pos
 			
-				global.cameraStruct.lastX = (global.cameraStruct.obj.x + -_cursorX) - camera_get_view_width(view_camera[_index]) * 0.5
-				global.cameraStruct.lastY = (global.cameraStruct.obj.y + -_cursorY) - camera_get_view_height(view_camera[_index]) * 0.5
+				if global.cameraStruct.fixedX != noone { global.cameraStruct.lastX = global.cameraStruct.fixedX - camera_get_view_width(view_camera[_index]) * 0.5; }
+				else { global.cameraStruct.lastX = (global.cameraStruct.obj.x + -_cursorX) - camera_get_view_width(view_camera[_index]) * 0.5; }
+				if global.cameraStruct.fixedY != noone { global.cameraStruct.lastY = global.cameraStruct.fixedY - camera_get_view_width(view_camera[_index]) * 0.5; }
+				else { global.cameraStruct.lastY = (global.cameraStruct.obj.y + -_cursorY) - camera_get_view_height(view_camera[_index]) * 0.5; }
 			
 				// Camera will snap to object, but slightly attracted by the player's mouse cursor
 				camera_set_view_pos(view_camera[_index],
@@ -145,8 +157,10 @@ function cameraStep()
 		{
 			if(global.cameraStruct.obj != noone)
 			{
-				global.cameraStruct.lastX = global.cameraStruct.obj.x - camera_get_view_width(view_camera[_index]) * 0.5;
-				global.cameraStruct.lastY = global.cameraStruct.obj.y - camera_get_view_height(view_camera[_index]) * 0.5;
+				if global.cameraStruct.fixedX != noone { global.cameraStruct.lastX = global.cameraStruct.fixedX - camera_get_view_width(view_camera[_index]) * 0.5; }
+				else { global.cameraStruct.lastX = global.cameraStruct.obj.x - camera_get_view_width(view_camera[_index]) * 0.5; }
+				if global.cameraStruct.fixedY != noone { global.cameraStruct.lastY = global.cameraStruct.fixedY - camera_get_view_width(view_camera[_index]) * 0.5; }
+				else { global.cameraStruct.lastY = global.cameraStruct.obj.y - camera_get_view_height(view_camera[_index]) * 0.5; }
 				
 				// Camera will snap to object
 				camera_set_view_pos(view_camera[_index],
@@ -162,8 +176,10 @@ function cameraStep()
 				var _camX = global.cameraStruct.obj.x - camera_get_view_width(view_camera[_index]) * 0.5;
 				var _camY = global.cameraStruct.obj.y - camera_get_view_height(view_camera[_index]) * 0.5;
 				
-				global.cameraStruct.lastX = lerp(global.cameraStruct.lastX, _camX, global.cameraStruct.cameraSpeed);
-				global.cameraStruct.lastY = lerp(global.cameraStruct.lastY, _camY, global.cameraStruct.cameraSpeed);
+				if global.cameraStruct.fixedX != noone { global.cameraStruct.lastX = global.cameraStruct.fixedX - camera_get_view_width(view_camera[_index]) * 0.5; }
+				else { global.cameraStruct.lastX = lerp(global.cameraStruct.lastX, _camX, global.cameraStruct.cameraSpeed); }
+				if global.cameraStruct.fixedY != noone { global.cameraStruct.lastY = global.cameraStruct.fixedY - camera_get_view_width(view_camera[_index]) * 0.5; }
+				else { global.cameraStruct.lastY = lerp(global.cameraStruct.lastY, _camY, global.cameraStruct.cameraSpeed); }
 				
 				// Camera will follow the object
 				camera_set_view_pos(view_camera[_index],
@@ -182,8 +198,10 @@ function cameraStep()
 				var _cursorX = (global.cameraStruct.obj.x + -(global.cameraStruct.obj.x - mouse_x)/global.cameraStruct.cursorInfluenceReduction) - camera_get_view_width(view_camera[_index]) * 0.5; // Increment x value based on cursor pos
 				var _cursorY = (global.cameraStruct.obj.y + -(global.cameraStruct.obj.y - mouse_y)/global.cameraStruct.cursorInfluenceReduction) - camera_get_view_height(view_camera[_index]) * 0.5; // Increment y value based on cursor pos
 				
-				global.cameraStruct.lastX = lerp(global.cameraStruct.lastX, _camX, global.cameraStruct.cameraSpeed);
-				global.cameraStruct.lastY = lerp(global.cameraStruct.lastY, _camY, global.cameraStruct.cameraSpeed);
+				if global.cameraStruct.fixedX != noone { global.cameraStruct.lastX = global.cameraStruct.fixedX - camera_get_view_width(view_camera[_index]) * 0.5; }
+				else { global.cameraStruct.lastX = lerp(global.cameraStruct.lastX, _camX, global.cameraStruct.cameraSpeed); }
+				if global.cameraStruct.fixedY != noone { global.cameraStruct.lastY = global.cameraStruct.fixedY - camera_get_view_width(view_camera[_index]) * 0.5; }
+				else { global.cameraStruct.lastY = lerp(global.cameraStruct.lastY, _camY, global.cameraStruct.cameraSpeed); }
 				
 				// Camera will follow the object, but slightly attracted by the cursor
 				camera_set_view_pos(view_camera[_index],
