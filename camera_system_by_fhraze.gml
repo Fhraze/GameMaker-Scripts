@@ -224,9 +224,6 @@ function cameraStep()
 			}//fi
 			break;
 		}
-		default:
-		{
-			break;	
-		}
+		default: { break; }
 	}
 }
