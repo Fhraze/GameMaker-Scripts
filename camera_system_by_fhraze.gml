@@ -69,32 +69,32 @@ function cameraShake(_shakeFade = DEFAULT_SHAKE_FADE, _shakeMagnitude = DEFAULT_
 // Set camera to snap to an object, but slightly attracted by the mouse cursor
 function setCameraFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone, _cursorInfluenceReduction = DEFAULT_CURSOR_INFLUENCE_REDUCTION)
 {
-	global.cameraStruct[$ "type"] = global.cameraType.follow;
-	global.cameraStruct[$ "obj"] = _followedObject;
-	global.cameraStruct[$ "cameraIndex"] = _cameraIndex;
-	global.cameraStruct[$ "cursorInfluenceReduction"] = _cursorInfluenceReduction;
-	global.cameraStruct[$ "fixedX"] = _fixedX;
-	global.cameraStruct[$ "fixedY"] = _fixedY;
+	global.cameraStruct.type = global.cameraType.follow;
+	global.cameraStruct.obj = _followedObject;
+	global.cameraStruct.cameraIndex = _cameraIndex;
+	global.cameraStruct.cursorInfluenceReduction = _cursorInfluenceReduction;
+	global.cameraStruct.fixedX = _fixedX;
+	global.cameraStruct.fixedY = _fixedY;
 }
 
 // Set camera to snap to an object
 function setCameraSnapFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone)
 {
-	global.cameraStruct[$ "type"] = global.cameraType.snapFollow;
-	global.cameraStruct[$ "obj"] = _followedObject;
-	global.cameraStruct[$ "cameraIndex"] = _cameraIndex;
-	global.cameraStruct[$ "fixedX"] = _fixedX;
-	global.cameraStruct[$ "fixedY"] = _fixedY;
+	global.cameraStruct.type = global.cameraType.snapFollow;
+	global.cameraStruct.obj = _followedObject;
+	global.cameraStruct.cameraIndex = _cameraIndex;
+	global.cameraStruct.fixedX = _fixedX;
+	global.cameraStruct.fixedY = _fixedY;
 }
 
 // Set camera to slowly follow an object
 function setCameraSoftFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone, _cameraSpeed = DEFAULT_CAMERA_SPEED)
 {
-	global.cameraStruct[$ "type"] = global.cameraType.softFollow;
-	global.cameraStruct[$ "obj"] = _followedObject;
-	global.cameraStruct[$ "cameraIndex"] = _cameraIndex;
-	global.cameraStruct[$ "fixedX"] = _fixedX;
-	global.cameraStruct[$ "fixedY"] = _fixedY;
+	global.cameraStruct.type = global.cameraType.softFollow;
+	global.cameraStruct.obj = _followedObject;
+	global.cameraStruct.cameraIndex = _cameraIndex;
+	global.cameraStruct.fixedX = _fixedX;
+	global.cameraStruct.fixedY = _fixedY;
 	if(global.cameraStruct.lastX == noone)
 	{
 		global.cameraStruct.lastX = global.cameraStruct.obj.x - camera_get_view_width(view_camera[global.cameraStruct.cameraIndex]) * 0.5;
@@ -105,12 +105,12 @@ function setCameraSoftFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDE
 // Set camera to slowly follow an object, but slightly attracted by the mouse cursor
 function setCameraExtraSoftFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone, _cameraSpeed = DEFAULT_CAMERA_SPEED, _cursorInfluenceReduction = DEFAULT_CURSOR_INFLUENCE_REDUCTION)
 {
-	global.cameraStruct[$ "type"] = global.cameraType.extraSoftFollow;
-	global.cameraStruct[$ "obj"] = _followedObject;
-	global.cameraStruct[$ "cameraIndex"] = _cameraIndex;
-	global.cameraStruct[$ "cursorInfluenceReduction"] = _cursorInfluenceReduction;
-	global.cameraStruct[$ "fixedX"] = _fixedX;
-	global.cameraStruct[$ "fixedY"] = _fixedY;
+	global.cameraStruct.type = global.cameraType.extraSoftFollow;
+	global.cameraStruct.obj = _followedObject;
+	global.cameraStruct.cameraIndex = _cameraIndex;
+	global.cameraStruct.cursorInfluenceReduction = _cursorInfluenceReduction;
+	global.cameraStruct.fixedX = _fixedX;
+	global.cameraStruct.fixedY = _fixedY;
 	if(global.cameraStruct.lastX == noone)
 	{
 		global.cameraStruct.lastX = global.cameraStruct.obj.x - camera_get_view_width(view_camera[global.cameraStruct.cameraIndex]) * 0.5;
@@ -121,20 +121,20 @@ function setCameraExtraSoftFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA
 // Set camera to be fixed at a scene
 function setCameraScene(_sceneX, _sceneY, _cameraIndex = DEFAULT_CAMERA_INDEX)
 {
-	global.cameraStruct[$ "type"] = global.cameraType.scene;
-	global.cameraStruct[$ "camX"] = _sceneX;
-	global.cameraStruct[$ "camY"] = _sceneY;
-	global.cameraStruct[$ "cameraIndex"] = _cameraIndex;
+	global.cameraStruct.type = global.cameraType.scene;
+	global.cameraStruct.camX = _sceneX;
+	global.cameraStruct.camY = _sceneY;
+	global.cameraStruct.cameraIndex = _cameraIndex;
 	global.cameraStruct.obj = noone;
 }
 
 // Slowly move camera to a scene
 function setCameraSoftScene(_sceneX, _sceneY, _cameraIndex = DEFAULT_CAMERA_INDEX)
 {
-	global.cameraStruct[$ "type"] = global.cameraType.softScene;
-	global.cameraStruct[$ "camX"] = _sceneX;
-	global.cameraStruct[$ "camY"] = _sceneY;
-	global.cameraStruct[$ "cameraIndex"] = _cameraIndex;
+	global.cameraStruct.type = global.cameraType.softScene;
+	global.cameraStruct.camX = _sceneX;
+	global.cameraStruct.camY = _sceneY;
+	global.cameraStruct.cameraIndex = _cameraIndex;
 	global.cameraStruct.obj = noone;
 	if(global.cameraStruct.lastX == noone)
 	{
