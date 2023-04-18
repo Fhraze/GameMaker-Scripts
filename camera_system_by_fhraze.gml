@@ -199,14 +199,14 @@ function cameraStep()
 				var _cursorY = (global.cameraStruct.obj.y + -(global.cameraStruct.obj.y - mouse_y)/global.cameraStruct.cursorInfluenceReduction) - camera_get_view_height(view_camera[_index]) * 0.5; // Increment y value based on cursor pos
 				
 				if global.cameraStruct.fixedX != noone { global.cameraStruct.lastX = global.cameraStruct.fixedX - camera_get_view_width(view_camera[_index]) * 0.5; }
-				else { global.cameraStruct.lastX = lerp(global.cameraStruct.lastX, _camX, global.cameraStruct.cameraSpeed); }
+				else { global.cameraStruct.lastX = (lerp(global.cameraStruct.lastX, _camX, global.cameraStruct.cameraSpeed) + _cursorX) * 0.5; }
 				if global.cameraStruct.fixedY != noone { global.cameraStruct.lastY = global.cameraStruct.fixedY - camera_get_view_width(view_camera[_index]) * 0.5; }
-				else { global.cameraStruct.lastY = lerp(global.cameraStruct.lastY, _camY, global.cameraStruct.cameraSpeed); }
+				else { global.cameraStruct.lastY = (lerp(global.cameraStruct.lastY, _camY, global.cameraStruct.cameraSpeed) + _cursorY) * 0.5; }
 				
 				// Camera will follow the object, but slightly attracted by the cursor
 				camera_set_view_pos(view_camera[_index],
-				(global.cameraStruct.lastX + _cursorX) * 0.5,
-				(global.cameraStruct.lastY + _cursorY) * 0.5);
+				global.cameraStruct.lastX,
+				global.cameraStruct.lastY);
 			}//fi
 			break;
 		}
