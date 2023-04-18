@@ -24,6 +24,9 @@ the function's description will be right on top of it.
 // 0.125
 // 0.0625
 // 0.03125
+#macro DEFAULT_SHAKE_TIME 0
+#macro DEFAULT_SHAKE_MAGNITUDE 10
+#macro DEFAULT_SHAKE_FADE 0.25
 
 global.cameraType =
 {
@@ -47,7 +50,20 @@ global.cameraStruct =
 	lastX: noone,
 	lastY: noone,
 	fixedX: noone,
-	fixedY: noone
+	fixedY: noone,
+	shakeTime: 0,
+	shakeMagnitude: DEFAULT_SHAKE_MAGNITUDE,
+	shakeFade: DEFAULT_SHAKE_FADE,
+	shake: false
+}
+
+// Start a screen shake
+function cameraShake(_shakeFade = DEFAULT_SHAKE_FADE, _shakeMagnitude = DEFAULT_SHAKE_MAGNITUDE, _shakeTime = DEFAULT_SHAKE_TIME)
+{
+	global.cameraStruct.shakeTime = _shakeTime;
+	global.cameraStruct.shakeMagnitude = _shakeMagnitude;
+	global.cameraStruct.shakeFade = _shakeFade;
+	global.cameraStruct.shake = true
 }
 
 // Set camera to snap to an object, but slightly attracted by the mouse cursor
@@ -127,7 +143,29 @@ function setCameraSoftScene(_sceneX, _sceneY, _cameraIndex = DEFAULT_CAMERA_INDE
 	}
 }
 
-// Call the camera step event
+// Camera's shake function's step event !!! THIS FUNCTION ISN'T MEAN TO BE CALLED OUTSIDE THE SCRIPT !!!
+function NEVER_CALL_shakeStep()
+{
+	global.cameraStruct.shakeTime -= 1;
+	
+	var _x = choose(-global.cameraStruct.shakeMagnitude, global.cameraStruct.shakeMagnitude);
+	var _y = choose(-global.cameraStruct.shakeMagnitude, global.cameraStruct.shakeMagnitude);
+	
+	global.cameraStruct.lastX += _x;
+	global.cameraStruct.lastY += _y;
+	
+	if(global.cameraStruct.shakeTime <= 0)
+	{
+		global.cameraStruct.shakeMagnitude -= global.cameraStruct.shakeFade;
+		
+		if(global.cameraStruct.shakeMagnitude <= 0)
+		{
+			global.cameraStruct.shake = false;
+		}
+	}
+}
+
+// Camera's step event
 function cameraStep()
 {
 	var _index = global.cameraStruct.cameraIndex;
@@ -145,6 +183,8 @@ function cameraStep()
 				else { global.cameraStruct.lastX = (global.cameraStruct.obj.x + -_cursorX) - camera_get_view_width(view_camera[_index]) * 0.5; }
 				if global.cameraStruct.fixedY != noone { global.cameraStruct.lastY = global.cameraStruct.fixedY - camera_get_view_width(view_camera[_index]) * 0.5; }
 				else { global.cameraStruct.lastY = (global.cameraStruct.obj.y + -_cursorY) - camera_get_view_height(view_camera[_index]) * 0.5; }
+				
+				if global.cameraStruct.shake == true { NEVER_CALL_shakeStep() }
 			
 				// Camera will snap to object, but slightly attracted by the player's mouse cursor
 				camera_set_view_pos(view_camera[_index],
@@ -161,6 +201,8 @@ function cameraStep()
 				else { global.cameraStruct.lastX = global.cameraStruct.obj.x - camera_get_view_width(view_camera[_index]) * 0.5; }
 				if global.cameraStruct.fixedY != noone { global.cameraStruct.lastY = global.cameraStruct.fixedY - camera_get_view_width(view_camera[_index]) * 0.5; }
 				else { global.cameraStruct.lastY = global.cameraStruct.obj.y - camera_get_view_height(view_camera[_index]) * 0.5; }
+				
+				if global.cameraStruct.shake == true { NEVER_CALL_shakeStep() }
 				
 				// Camera will snap to object
 				camera_set_view_pos(view_camera[_index],
@@ -180,6 +222,8 @@ function cameraStep()
 				else { global.cameraStruct.lastX = lerp(global.cameraStruct.lastX, _camX, global.cameraStruct.cameraSpeed); }
 				if global.cameraStruct.fixedY != noone { global.cameraStruct.lastY = global.cameraStruct.fixedY - camera_get_view_width(view_camera[_index]) * 0.5; }
 				else { global.cameraStruct.lastY = lerp(global.cameraStruct.lastY, _camY, global.cameraStruct.cameraSpeed); }
+				
+				if global.cameraStruct.shake == true { NEVER_CALL_shakeStep() }
 				
 				// Camera will follow the object
 				camera_set_view_pos(view_camera[_index],
@@ -203,6 +247,8 @@ function cameraStep()
 				if global.cameraStruct.fixedY != noone { global.cameraStruct.lastY = global.cameraStruct.fixedY - camera_get_view_width(view_camera[_index]) * 0.5; }
 				else { global.cameraStruct.lastY = (lerp(global.cameraStruct.lastY, _camY, global.cameraStruct.cameraSpeed) + _cursorY) * 0.5; }
 				
+				if global.cameraStruct.shake == true { NEVER_CALL_shakeStep() }
+				
 				// Camera will follow the object, but slightly attracted by the cursor
 				camera_set_view_pos(view_camera[_index],
 				global.cameraStruct.lastX,
@@ -216,6 +262,8 @@ function cameraStep()
 			{
 				global.cameraStruct.lastX = global.cameraStruct.camX - camera_get_view_width(view_camera[_index]) * 0.5;
 				global.cameraStruct.lastY = global.cameraStruct.camY - camera_get_view_height(view_camera[_index]) * 0.5;
+				
+				if global.cameraStruct.shake == true { NEVER_CALL_shakeStep() }
 				
 				// Camera will snap to object
 				camera_set_view_pos(view_camera[_index],
@@ -233,6 +281,8 @@ function cameraStep()
 				
 				global.cameraStruct.lastX = lerp(global.cameraStruct.lastX, _camX, global.cameraStruct.cameraSpeed);
 				global.cameraStruct.lastY = lerp(global.cameraStruct.lastY, _camY, global.cameraStruct.cameraSpeed);
+				
+				if global.cameraStruct.shake == true { NEVER_CALL_shakeStep() }
 				
 				// Camera will slowly move to the given coordinate
 				camera_set_view_pos(view_camera[_index],
