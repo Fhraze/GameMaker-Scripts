@@ -52,9 +52,12 @@ function ftimerSetSpeed(_timerName, _speed) { global.fTimers[$ _timerName] = { S
 // Checks the status of the specified timer. If the timer has ended it will return false, otherwise it will return true.
 function ftimerStatus(_timerName)
 {
-	if (global.fTimers[$ _timerName].Frames <= 0
-		or !variable_struct_exists(global.fTimers, _timerName)) { return false; }
-	else { return true; }
+	if variable_struct_exists(global.fTimers, _timerName)
+	{
+		if global.fTimers[$ _timerName].Frames > 0 { return true; }
+		else return false;
+	}
+	else return false;
 }
 
 // Remove an existing timer from the fTimers struct
