@@ -48,7 +48,7 @@ global.cameraStruct =
 }
 
 // Start a screen shake
-function cameraShake(_shakeFade = DEFAULT_SHAKE_FADE, _shakeMagnitude = DEFAULT_SHAKE_MAGNITUDE, _shakeTime = DEFAULT_SHAKE_TIME)
+function camera_shake(_shakeFade = DEFAULT_SHAKE_FADE, _shakeMagnitude = DEFAULT_SHAKE_MAGNITUDE, _shakeTime = DEFAULT_SHAKE_TIME)
 {
 	global.cameraStruct.shakeTime = _shakeTime;
 	global.cameraStruct.shakeMagnitude = _shakeMagnitude;
@@ -57,7 +57,7 @@ function cameraShake(_shakeFade = DEFAULT_SHAKE_FADE, _shakeMagnitude = DEFAULT_
 }
 
 // Set camera to snap to an object, but slightly attracted by the mouse cursor
-function setCameraFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone, _cursorInfluenceReduction = DEFAULT_CURSOR_INFLUENCE_REDUCTION)
+function set_camera_follow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone, _cursorInfluenceReduction = DEFAULT_CURSOR_INFLUENCE_REDUCTION)
 {
 	global.cameraStruct.type = "follow";
 	global.cameraStruct.obj = _followedObject;
@@ -68,7 +68,7 @@ function setCameraFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _
 }
 
 // Set camera to snap to an object
-function setCameraSnapFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone)
+function set_camera_snap_follow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone)
 {
 	global.cameraStruct.type = "snapFollow";
 	global.cameraStruct.obj = _followedObject;
@@ -78,7 +78,7 @@ function setCameraSnapFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDE
 }
 
 // Set camera to slowly follow an object
-function setCameraSoftFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone, _cameraSpeed = DEFAULT_CAMERA_SPEED)
+function set_camera_soft_follow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone, _cameraSpeed = DEFAULT_CAMERA_SPEED)
 {
 	global.cameraStruct.type = "softFollow";
 	global.cameraStruct.obj = _followedObject;
@@ -93,7 +93,7 @@ function setCameraSoftFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDE
 }
 
 // Set camera to slowly follow an object, but slightly attracted by the mouse cursor
-function setCameraExtraSoftFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone, _cameraSpeed = DEFAULT_CAMERA_SPEED, _cursorInfluenceReduction = DEFAULT_CURSOR_INFLUENCE_REDUCTION)
+function set_camera_extra_soft_follow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone, _cameraSpeed = DEFAULT_CAMERA_SPEED, _cursorInfluenceReduction = DEFAULT_CURSOR_INFLUENCE_REDUCTION)
 {
 	global.cameraStruct.type = "extraSoftFollow";
 	global.cameraStruct.obj = _followedObject;
@@ -109,7 +109,7 @@ function setCameraExtraSoftFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA
 }
 
 // Set camera to be fixed at a scene
-function setCameraScene(_sceneX, _sceneY, _cameraIndex = DEFAULT_CAMERA_INDEX)
+function set_camera_scene(_sceneX, _sceneY, _cameraIndex = DEFAULT_CAMERA_INDEX)
 {
 	global.cameraStruct.type = "scene";
 	global.cameraStruct.camX = _sceneX;
@@ -119,7 +119,7 @@ function setCameraScene(_sceneX, _sceneY, _cameraIndex = DEFAULT_CAMERA_INDEX)
 }
 
 // Slowly move camera to a scene
-function setCameraSoftScene(_sceneX, _sceneY, _cameraIndex = DEFAULT_CAMERA_INDEX)
+function set_camera_soft_scene(_sceneX, _sceneY, _cameraIndex = DEFAULT_CAMERA_INDEX)
 {
 	global.cameraStruct.type = "softScene";
 	global.cameraStruct.camX = _sceneX;
@@ -156,7 +156,7 @@ function NEVER_CALL_shakeStep()
 }
 
 // Camera's step event
-function cameraStep()
+function camera_step()
 {
 	var _index = global.cameraStruct.cameraIndex;
 	
