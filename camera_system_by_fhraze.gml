@@ -28,16 +28,6 @@ the function's description will be right on top of it.
 #macro DEFAULT_SHAKE_MAGNITUDE 10
 #macro DEFAULT_SHAKE_FADE 0.25
 
-global.cameraType =
-{
-	follow: "follow",
-	snapFollow: "snapFollow",
-	softFollow: "softFollow",
-	extraSoftFollow: "extraSoftFollow",
-	scene: "scene",
-	softScene: "softScene"
-}
-
 global.cameraStruct =
 {
 	type: noone, // Available types: "follow", "snapFollow", "softFollow" and "scene"
@@ -69,7 +59,7 @@ function cameraShake(_shakeFade = DEFAULT_SHAKE_FADE, _shakeMagnitude = DEFAULT_
 // Set camera to snap to an object, but slightly attracted by the mouse cursor
 function setCameraFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone, _cursorInfluenceReduction = DEFAULT_CURSOR_INFLUENCE_REDUCTION)
 {
-	global.cameraStruct.type = global.cameraType.follow;
+	global.cameraStruct.type = "follow";
 	global.cameraStruct.obj = _followedObject;
 	global.cameraStruct.cameraIndex = _cameraIndex;
 	global.cameraStruct.cursorInfluenceReduction = _cursorInfluenceReduction;
@@ -80,7 +70,7 @@ function setCameraFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _
 // Set camera to snap to an object
 function setCameraSnapFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone)
 {
-	global.cameraStruct.type = global.cameraType.snapFollow;
+	global.cameraStruct.type = "snapFollow";
 	global.cameraStruct.obj = _followedObject;
 	global.cameraStruct.cameraIndex = _cameraIndex;
 	global.cameraStruct.fixedX = _fixedX;
@@ -90,7 +80,7 @@ function setCameraSnapFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDE
 // Set camera to slowly follow an object
 function setCameraSoftFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone, _cameraSpeed = DEFAULT_CAMERA_SPEED)
 {
-	global.cameraStruct.type = global.cameraType.softFollow;
+	global.cameraStruct.type = "softFollow";
 	global.cameraStruct.obj = _followedObject;
 	global.cameraStruct.cameraIndex = _cameraIndex;
 	global.cameraStruct.fixedX = _fixedX;
@@ -105,7 +95,7 @@ function setCameraSoftFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDE
 // Set camera to slowly follow an object, but slightly attracted by the mouse cursor
 function setCameraExtraSoftFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA_INDEX, _fixedX = noone, _fixedY = noone, _cameraSpeed = DEFAULT_CAMERA_SPEED, _cursorInfluenceReduction = DEFAULT_CURSOR_INFLUENCE_REDUCTION)
 {
-	global.cameraStruct.type = global.cameraType.extraSoftFollow;
+	global.cameraStruct.type = "extraSoftFollow";
 	global.cameraStruct.obj = _followedObject;
 	global.cameraStruct.cameraIndex = _cameraIndex;
 	global.cameraStruct.cursorInfluenceReduction = _cursorInfluenceReduction;
@@ -121,7 +111,7 @@ function setCameraExtraSoftFollow(_followedObject, _cameraIndex = DEFAULT_CAMERA
 // Set camera to be fixed at a scene
 function setCameraScene(_sceneX, _sceneY, _cameraIndex = DEFAULT_CAMERA_INDEX)
 {
-	global.cameraStruct.type = global.cameraType.scene;
+	global.cameraStruct.type = "scene";
 	global.cameraStruct.camX = _sceneX;
 	global.cameraStruct.camY = _sceneY;
 	global.cameraStruct.cameraIndex = _cameraIndex;
@@ -131,7 +121,7 @@ function setCameraScene(_sceneX, _sceneY, _cameraIndex = DEFAULT_CAMERA_INDEX)
 // Slowly move camera to a scene
 function setCameraSoftScene(_sceneX, _sceneY, _cameraIndex = DEFAULT_CAMERA_INDEX)
 {
-	global.cameraStruct.type = global.cameraType.softScene;
+	global.cameraStruct.type = "softScene";
 	global.cameraStruct.camX = _sceneX;
 	global.cameraStruct.camY = _sceneY;
 	global.cameraStruct.cameraIndex = _cameraIndex;
