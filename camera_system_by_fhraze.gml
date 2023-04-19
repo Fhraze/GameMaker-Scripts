@@ -1,5 +1,5 @@
-///   Script that manages the camera position in-game
-///   by Fhraze
+/// Script that manages the camera position in-game
+/// by Fhraze
 /*
 
   Please note that this script works by managing Game Maker's
