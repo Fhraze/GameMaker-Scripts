@@ -37,7 +37,7 @@ function animation_add_finite(_tag, _sprite, _startFrame, _endFrame, _repeatAmmo
 // Delete a tag from the tags struct
 function animation_remove(_tag) { variable_struct_remove(global.tags, _tag) }
 
-function animation_set(_tag, _xscale = 1, _yscale = 1)
+function animation_set(_tag, _xscale = global.tags[$ _tag].xScale, _yscale = global.tags[$ _tag].yScale)
 {
 	if !variable_instance_exists(id, "currentAnimation") { variable_instance_set(id, "currentAnimation", _tag); }
 	else { currentAnimation = _tag; }
