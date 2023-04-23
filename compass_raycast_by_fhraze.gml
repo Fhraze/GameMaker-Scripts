@@ -62,7 +62,8 @@ function compass_raycast(_from, _to){
 	var angle = point_direction(_from.x, _from.y, _to.x, _to.y);
 	var dir = "E";
 	var keys = variable_struct_get_names(global.compassRose);
-	array_delete(keys, 7, 1)
+	var e_index = array_get_index(keys, "E")
+	array_delete(keys, e_index, 1)
 	for (var i = array_length(keys)-1; i >= 0; --i)
 	{
 	    var k = keys[i];
