@@ -47,7 +47,7 @@ function random_str() {
 }
 
 // Change the speed of a running timer
-function ftimer_set_speed(_timerName, _speed) { global.fTimers[$ _timerName] = { Speed: _speed } }
+function ftimer_set_speed(_timerName, _speed) { global.fTimers[$ _timerName].Speed = _speed }
 
 // Checks the status of the specified timer. If the timer has ended it will return false, otherwise it will return true.
 function ftimer_status(_timerName)
