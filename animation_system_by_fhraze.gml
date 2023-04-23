@@ -69,7 +69,7 @@ function animation_step(_speed = 1)
 	{
 		image_xscale = global.tags[$ currentAnimation].xScale;
 		image_yscale = global.tags[$ currentAnimation].yScale;
-		object_set_sprite(self, global.tags[$ currentAnimation].sprite);
+		sprite_index = global.tags[$ currentAnimation].sprite;
 		var _image_index = floor(image_index)
 		var _startFrame = global.tags[$ currentAnimation].startFrame;
 		var _endFrame = global.tags[$ currentAnimation].endFrame;
