@@ -3,41 +3,58 @@
 //
 global.compassRose =
 {
-	w:{
+	W:{
+		xsp: -1,
+		ysp: 0,
 		hi: 155,
 		lo: 205,
 		dir: "W" },
-	nw:{
+	NW:{
+		xsp: -1,
+		ysp: -1,
 		hi: 109,
 		lo: 156,
 		dir: "NW"},
-	ne:{
+	NE:{
+		xsp: 1,
+		ysp: -1,
 		hi: 24,
 		lo: 71,
 		dir: "NE"},
-	se:{
+	SE:{
+		xsp: 1,
+		ysp: 1,
 		hi: 289,
 		lo: 336,
 		dir: "SE"},
-	sw:{
-		
+	SW:{
+		xsp: -1,
+		ysp: 1,
 		hi: 204,
 		lo: 251,
 		dir: "SW"},
-	n:{
+	N:{
+		xsp: 0,
+		ysp: -1,
 		hi: 70,
 		lo: 110,
 		dir: "N" },
-	s:{
+	S:{
+		xsp: 0,
+		ysp: 1,
 		hi: 250,
 		lo: 290,
-		dir: "S" }
+		dir: "S" },
+	E:{
+		xsp: 1,
+		ysp: 0 }
 }
 
-function raycast_8sides(_from, _to){
+function compass_raycast(_from, _to){
 	var angle = point_direction(_from.x, _from.y, _to.x, _to.y);
 	var dir = "E";
-	var keys = variable_struct_get_names(global.compassRose);	
+	var keys = variable_struct_get_names(global.compassRose);
+	array_delete(keys, 6, 1)
 	for (var i = array_length(keys)-1; i >= 0; --i)
 	{
 	    var k = keys[i];
@@ -46,4 +63,11 @@ function raycast_8sides(_from, _to){
 			{ dir = global.compassRose[$ k].dir; }
 	}
 	return dir;
+}
+
+function increment_towards_object(_obj, _sp = 1)
+{
+	var _dir = compass_raycast(self, _obj)
+	x += global.compassRose[$ _dir].xsp * _sp
+	y += global.compassRose[$ _dir].ysp * _sp
 }
