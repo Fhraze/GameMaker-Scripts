@@ -77,7 +77,8 @@ function ftimer_step()
 	{
 	    var k = keys[i];
 		var _speed = global.fTimers[$ k].Speed
-		if global.fTimers[$ k].Frames > 0 { global.fTimers[$ k].Frames -= _speed; }
+		if global.fTimers[$ k].Frames >= 0 { global.fTimers[$ k].Frames -= _speed; }
+		if global.fTimers[$ k].Frames < 0 { global.fTimers[$ k].Frames = 0 }
 		if (global.fTimers[$ k].Frames <= 0 and global.fTimers[$ k].Temp) { ftimer_remove(k); }
 	}
 }
