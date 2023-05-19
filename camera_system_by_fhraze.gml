@@ -243,8 +243,8 @@ function camera_step()
 				
 				var _x = global.cameraStruct.lastX;
 				var _y = global.cameraStruct.lastY;
-				if global.cameraStruct.fixedX == noone _x = (global.cameraStruct.lastX + _cursorX) * 0.5;
-				if global.cameraStruct.fixedY == noone _y = (global.cameraStruct.lastY + _cursorY) * 0.5;
+				if global.cameraStruct.fixedX == noone { _x = (global.cameraStruct.lastX + _cursorX) * 0.5; }
+				if global.cameraStruct.fixedY == noone { _y = (global.cameraStruct.lastY + _cursorY) * 0.5; }
 				
 				// Camera will follow the object, but slightly attracted by the cursor
 				camera_set_view_pos(view_camera[_index],
