@@ -26,9 +26,15 @@ the function's description will be right on top of it.
 // 0.125
 // 0.0625
 // 0.03125
+// Shake macros
 #macro DEFAULT_SHAKE_TIME 0
 #macro DEFAULT_SHAKE_MAGNITUDE 10
 #macro DEFAULT_SHAKE_FADE 0.25
+#macro DEFAULT_OPACITY 0.5
+// Dim macros
+#macro DEFAULT_RED 0
+#macro DEFAULT_GREEN 0
+#macro DEFAULT_BLUE 0
 
 global.cameraStruct =
 {
@@ -47,6 +53,15 @@ global.cameraStruct =
 	shakeMagnitude: DEFAULT_SHAKE_MAGNITUDE,
 	shakeFade: DEFAULT_SHAKE_FADE,
 	shake: false
+}
+
+// Dim the screen
+function camera_dim(_visible = true, _opacity = DEFAULT_OPACITY, R = DEFAULT_RED, G = DEFAULT_GREEN, B = DEFAULT_BLUE)
+{
+	if !instance_exists(obj_dim) { instance_create_depth(global.cameraStruct.lastX, global.cameraStruct.lastY, -99999, obj_dim); }
+	if _visible = true { obj_dim.image_alpha = _opacity; }
+	else { obj_dim.image_alpha = 0 }
+	obj_dim.image_blend = make_colour_hsv(R, G, B);
 }
 
 // Start a screen shake
@@ -243,8 +258,8 @@ function camera_step()
 				
 				var _x = global.cameraStruct.lastX;
 				var _y = global.cameraStruct.lastY;
-				if global.cameraStruct.fixedX == noone { _x = (global.cameraStruct.lastX + _cursorX) * 0.5; }
-				if global.cameraStruct.fixedY == noone { _y = (global.cameraStruct.lastY + _cursorY) * 0.5; }
+				if global.cameraStruct.fixedX == noone and !aimArrows { _x = (global.cameraStruct.lastX + _cursorX) * 0.5; }
+				if global.cameraStruct.fixedY == noone and !aimArrows { _y = (global.cameraStruct.lastY + _cursorY) * 0.5; }
 				
 				// Camera will follow the object, but slightly attracted by the cursor
 				camera_set_view_pos(view_camera[_index],
