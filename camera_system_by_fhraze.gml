@@ -13,6 +13,8 @@ the function's description will be right on top of it.
 
 */
 
+#macro MOUSE_X obj_aim.x //mouse_x
+#macro MOUSE_Y obj_aim.y //mouse_y
 #macro DEFAULT_CURSOR_INFLUENCE_REDUCTION 10
 //   The higher the influence reduction, the less influence
 // the cursor will have on the camera position
@@ -166,8 +168,8 @@ function camera_step()
 		{
 			if(global.cameraStruct.obj != noone)
 			{
-				var _cursorX = (global.cameraStruct.obj.x - mouse_x) / global.cameraStruct.cursorInfluenceReduction; // Increment x value based on cursor pos
-				var _cursorY = (global.cameraStruct.obj.y - mouse_y) / global.cameraStruct.cursorInfluenceReduction; // Increment y value based on cursor pos
+				var _cursorX = (global.cameraStruct.obj.x - MOUSE_X) / global.cameraStruct.cursorInfluenceReduction; // Increment x value based on cursor pos
+				var _cursorY = (global.cameraStruct.obj.y - MOUSE_Y) / global.cameraStruct.cursorInfluenceReduction; // Increment y value based on cursor pos
 			
 				if global.cameraStruct.fixedX != noone { global.cameraStruct.lastX = global.cameraStruct.fixedX - camera_get_view_width(view_camera[_index]) * 0.5; }
 				else { global.cameraStruct.lastX = (global.cameraStruct.obj.x + -_cursorX) - camera_get_view_width(view_camera[_index]) * 0.5; }
@@ -229,8 +231,8 @@ function camera_step()
 				var _camX = global.cameraStruct.obj.x - camera_get_view_width(view_camera[_index]) * 0.5;
 				var _camY = global.cameraStruct.obj.y - camera_get_view_height(view_camera[_index]) * 0.5;
 				
-				var _cursorX = (global.cameraStruct.obj.x + -(global.cameraStruct.obj.x - mouse_x)/global.cameraStruct.cursorInfluenceReduction) - camera_get_view_width(view_camera[_index]) * 0.5; // Increment x value based on cursor pos
-				var _cursorY = (global.cameraStruct.obj.y + -(global.cameraStruct.obj.y - mouse_y)/global.cameraStruct.cursorInfluenceReduction) - camera_get_view_height(view_camera[_index]) * 0.5; // Increment y value based on cursor pos
+				var _cursorX = (global.cameraStruct.obj.x + -(global.cameraStruct.obj.x - MOUSE_X)/global.cameraStruct.cursorInfluenceReduction) - camera_get_view_width(view_camera[_index]) * 0.5; // Increment x value based on cursor pos
+				var _cursorY = (global.cameraStruct.obj.y + -(global.cameraStruct.obj.y - MOUSE_Y)/global.cameraStruct.cursorInfluenceReduction) - camera_get_view_height(view_camera[_index]) * 0.5; // Increment y value based on cursor pos
 				
 				if global.cameraStruct.fixedX != noone { global.cameraStruct.lastX = global.cameraStruct.fixedX - camera_get_view_width(view_camera[_index]) * 0.5; }
 				else { global.cameraStruct.lastX = lerp(global.cameraStruct.lastX, _camX, global.cameraStruct.cameraSpeed); }
@@ -239,8 +241,10 @@ function camera_step()
 				
 				if global.cameraStruct.shake == true { NEVER_CALL_shakeStep() }
 				
-				var _x = (global.cameraStruct.lastX + _cursorX) * 0.5;
-				var _y = (global.cameraStruct.lastY + _cursorY) * 0.5;
+				var _x = global.cameraStruct.lastX;
+				var _y = global.cameraStruct.lastY;
+				if global.cameraStruct.fixedX == noone _x = (global.cameraStruct.lastX + _cursorX) * 0.5;
+				if global.cameraStruct.fixedY == noone _y = (global.cameraStruct.lastY + _cursorY) * 0.5;
 				
 				// Camera will follow the object, but slightly attracted by the cursor
 				camera_set_view_pos(view_camera[_index],
