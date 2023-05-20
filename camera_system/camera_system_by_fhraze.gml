@@ -30,8 +30,8 @@ the function's description will be right on top of it.
 #macro DEFAULT_SHAKE_TIME 0
 #macro DEFAULT_SHAKE_MAGNITUDE 10
 #macro DEFAULT_SHAKE_FADE 0.25
-#macro DEFAULT_OPACITY 0.5
 // Dim macros
+#macro DEFAULT_OPACITY 0.5
 #macro DEFAULT_HUE 255
 #macro DEFAULT_SATURATION 255
 #macro DEFAULT_VALUE 0
