@@ -15,6 +15,8 @@ the function's description will be right on top of it.
 
 #macro MOUSE_X mouse_x
 #macro MOUSE_Y mouse_y
+#macro USE_OBJECT_AS_CURSOR true // use an object as cursor, specified below...
+#macro MOUSE_OBJECT obj_aim
 #macro DEFAULT_CURSOR_INFLUENCE_REDUCTION 10
 //   The higher the influence reduction, the less influence
 // the cursor will have on the camera position
@@ -175,6 +177,10 @@ function NEVER_CALL_shakeStep()
 // Camera's step event
 function camera_step()
 {
+	if USE_OBJECT_AS_CURSOR
+	{
+		if !instance_exists(MOUSE_OBJECT) { return 0; }
+	}
 	var _index = global.cameraStruct.cameraIndex;
 	
 	switch(global.cameraStruct.type)
