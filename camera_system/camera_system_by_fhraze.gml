@@ -13,8 +13,8 @@ the function's description will be right on top of it.
 
 */
 
-#macro MOUSE_X obj_aim.x //mouse_x
-#macro MOUSE_Y obj_aim.y //mouse_y
+#macro MOUSE_X mouse_x
+#macro MOUSE_Y mouse_y
 #macro DEFAULT_CURSOR_INFLUENCE_REDUCTION 10
 //   The higher the influence reduction, the less influence
 // the cursor will have on the camera position
