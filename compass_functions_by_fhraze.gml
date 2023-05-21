@@ -59,7 +59,7 @@ global.compassRose =
 }
 
 function compass_raycast(_from, _to){
-	if !instance_exists(_from) or !instance_exists(_to) { return 0 }
+	if !instance_exists(_from) or !instance_exists(_to) { return 0; }
 	var angle = point_direction(_from.x, _from.y, _to.x, _to.y);
 	var dir = "E";
 	var keys = variable_struct_get_names(global.compassRose);
@@ -77,7 +77,7 @@ function compass_raycast(_from, _to){
 
 function increment_towards_object(_obj, _sp = 1)
 {
-	if !instance_exists(_obj) { return 0 }
+	if !instance_exists(_obj) { return 0; }
 	var _dir = compass_raycast(self, _obj)
 	x += global.compassRose[$ _dir].xsp * _sp
 	y += global.compassRose[$ _dir].ysp * _sp
