@@ -15,7 +15,7 @@ the function's description will be right on top of it.
 
 #macro MOUSE_X mouse_x
 #macro MOUSE_Y mouse_y
-#macro USE_OBJECT_AS_CURSOR true // use an object as cursor, specified below...
+#macro USE_OBJECT_AS_CURSOR false // use an object as cursor, specified below...
 #macro MOUSE_OBJECT obj_aim
 #macro DEFAULT_CURSOR_INFLUENCE_REDUCTION 10
 //   The higher the influence reduction, the less influence
